@@ -1,0 +1,13 @@
+<?php
+
+function comment_buddy_comment_insert($comment) {
+  drupal_set_message(t('Commeent is there and sucks'));
+}
+
+function comment_buddy_comment_update($comment) {
+  drupal_set_message(t('Get it get it got it'));
+}
+
+function comment_buddy_comment_delete($comment) {
+  drupal_set_message(t('what what?'));
+}
