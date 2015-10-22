@@ -1,0 +1,73 @@
+<?php
+
+function rps_menu() {
+    $items = array();
+    $items['rps'] = array(
+        'title' => 'Play Rock Paper Scissors',
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('rps_form'),
+        'access callback' => TRUE,
+        'type' => MENU_NORMAL_ITEM,
+    );
+    $items['rps_result'] = array(
+        'title' => 'Result',
+        'page callback' => 'rps_result',
+        'access callback' => TRUE,
+        'type' => MENU_CALLBACK,
+    );
+    return $items;
+}
+
+$playerOptions = array(
+  '0' => "Rock",
+  '1' => "Paper",
+  '2' => "Scissors"
+);
+
+function rps_form() {
+    $form['player_one'] = array(
+        '#title' => 'Player One',
+        '#type' => 'radios',
+        '#options' => array(
+          0 => "Rock",
+          1 => "Paper",
+          2 => "Scissors"
+        ),
+        // '#element_validate' => array('element_validate_number'),
+    );
+    $form['player_two'] = array(
+        '#title' => 'Player Two',
+        '#type' => 'radios',
+        '#options' => array(
+          3 => "Rock",
+          6 => "Paper",
+          9 => "Scissors"
+        ),
+        // '#element_validate' => array('element_validate_number'),
+    );
+    $form['submit'] = array(
+        '#type' => 'submit',
+        '#value' => 'Play Game',
+    );
+
+    return $form;
+}
+
+function rps_form_submit($form, &$form_state) {
+    $first_number = $form_state['values']['player_one'];
+    $second_number = $form_state['values']['player_two'];
+    $sum = $first_number + $second_number;
+    $_SESSION['sum_output'] = $sum;
+    $_SESSION['debug'] = array($first_number);
+
+
+    $form_state['redirect'] = 'rps_result';
+}
+
+
+function rps_result() {
+    $answer = $_SESSION['sum_output'];
+    $outcome_array = [3,3,3,0,1,2,2,0,1,1,2,0];  //Setting match winner index number into array at an index of the matching sums.
+    $result_array = ["Tie!", "Player 1 Wins!", "Player 2 Wins!"];  //Setting an array of possible results based on the value in outcome array
+    return $result_array[$outcome_array[$answer]];
+}

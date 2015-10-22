@@ -1,0 +1,5 @@
+name = Rock Paper Scissors
+description = Runs a rock paper scissor match.
+package = My First Modules
+core = 7.x
+files[] = rps.module
